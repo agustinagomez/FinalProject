@@ -1,14 +1,17 @@
 import axios from 'axios'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context'
 import style from "../css/register.module.css"
+import {useDispatch} from 'react-redux'
+import { getUser } from '../features/users/userSlice'
 
 const Register = () => {
     const [user, setUser] = useState({name: "", email: "", username: "", password: "", confirmPassword: ""})
     const [errors, setErrors] = useState({name: "", email: "", username: "", password: "", confirmPassword: ""})
     const [equal, setEqual] = useState(false)
+    const dispatch = useDispatch()
     const { signup } = useAuth()
     const handleSubmit = async(e) => {
         e.preventDefault()
@@ -46,6 +49,10 @@ const Register = () => {
         Estado [usuarios]: [usuarios.some(u => RegExp.test(u))]
         */
     }
+  useEffect(()=> {
+   dispatch(getUser())
+  },[dispatch]);
+   
   return (
     <div>
       
