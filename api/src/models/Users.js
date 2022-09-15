@@ -20,7 +20,8 @@ module.exports = (sequelize) => {
       },
       plan: {
         type: DataTypes.ENUM("Regular", "Premium"),
-        allowNull: false
+        allowNull: false,
+        defaultValue: "Regular"
       },
       email: {
         type: DataTypes.STRING,

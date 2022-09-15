@@ -54,7 +54,7 @@ export const getUser = ()  => {
   return async (dispatch) => {
     dispatch(getUserStart());
     try {
-      const response = await axios.get("https://course-api.com/react-useReducer-cart-project" );
+      const response = await axios.get("/users");
       dispatch(getUserSuccess(response.data));
     } catch (error) {
       dispatch(getUserError(error));
@@ -65,7 +65,7 @@ export const getUser = ()  => {
 //crear users
 export const createdUser = (user) => {
   return async(dispatch) => {
-    let response = await axios.post("https://course-api.com/react-useReducer-cart-project", user);
+    let response = await axios.post("/users", user);
     dispatch(addUsers(response.data));
   
   };
@@ -75,7 +75,7 @@ export const createdUser = (user) => {
 export const updateUser = (nickname, body) => {
 return async(dispatch) => {
   try {
-    const response = await axios.put(`https://course-api.com/react-useReducer-cart-project/${nickname}`, body)
+    const response = await axios.put(`/users/${nickname}`, body)
     if(response){
       dispatch(updateUser())
       dispatch(getUser())
@@ -90,7 +90,7 @@ return async(dispatch) => {
 export const deleteUser = (id) => {
 return async (dispatch) =>{
   try {
-    await axios.put(`https://course-api.com/react-useReducer-cart-project/${id}`);
+    await axios.put(`/users/${id}`);
     dispatch(deleteUser());
     dispatch(getUser())
   } catch (error) {

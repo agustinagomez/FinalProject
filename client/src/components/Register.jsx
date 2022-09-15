@@ -51,6 +51,7 @@ const Register = () => {
         Estado [usuarios]: [usuarios.some(u => RegExp.test(u))]
         */
     }
+    
 
   return (
     <div>
