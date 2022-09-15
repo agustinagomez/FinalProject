@@ -1,21 +1,27 @@
-const { Users, Posts } = require("../db");
+const { Users } = require("../db");
 
 const createUser = async (req, res) => {
-  const { name, role, email, password, username, avatar } = req.body;
+
+  const { name, role, plan, email, password, username, avatar } = req.body;
+
   try {
+
     let user = await Users.create({
       name,
       role,
+      plan,
       email,
       password,
       username,
       avatar,
     });
-    res.send(user);
-    return user;
+
+    return res.json(user);
+
   } catch (error) {
-    error;
-  }
+
+    return res.status(500).send(err);
+  };
 };
 
 module.exports = createUser;
