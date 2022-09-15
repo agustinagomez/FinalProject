@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { authContext, useAuth } from '../context'
 import style from "../css/register.module.css"
-import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 import TextField from '@material-ui/core/TextField'
 import { Box } from '@mui/material'
 import {EmailIcon, PadLock, UserIcon} from "./componentsIcons/index"
@@ -68,7 +67,6 @@ const Register = () => {
     <div className={style.divBackground}>
       
       <div className={style.containerRegisterDiv}>
-      <ArrowBackOutlinedIcon className={style.arrow} />
       <div className={style.divBackground}>
         <h1 style={{fontSize: "5em", padding: "50px"}}>
           Welcome,<br />
