@@ -49,4 +49,6 @@ body{
   --main-page-color: #000A1F
 }
 
-
+body{
+  margin: 0;
+}

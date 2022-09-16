@@ -8,6 +8,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const authContext = createContext();
 
@@ -16,10 +17,10 @@ export const useAuth = () => {
   if (!context) throw new Error("There is not auth provider");
   return context;
 };
-
 export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [userFirebase, setUserFirebase] = useState({ login: false });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsuscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -32,7 +33,14 @@ export function AuthProvider({ children }) {
   }, []);
 
   const signup = (email, password) => {
-    return createUserWithEmailAndPassword(auth, email, password);
+    let a;
+    try {
+      a = createUserWithEmailAndPassword(auth, email, password);
+      navigate("/home");
+    } catch (err) {
+      return err;
+    }
+    return a;
   };
 
   const signupWithGoogle = () => {
@@ -40,6 +48,7 @@ export function AuthProvider({ children }) {
     signInWithPopup(auth, provider)
       .then((result) => {
         setUserFirebase({ login: true });
+        return navigate("/home");
       })
       .catch((error) => {
         // Handle Errors here.

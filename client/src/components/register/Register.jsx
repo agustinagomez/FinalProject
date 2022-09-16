@@ -1,12 +1,11 @@
-//import axios from 'axios'
+import axios from 'axios'
 import React from 'react'
+import "./register.css"
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { authContext, useAuth } from '../context'
-import style from "../css/register.module.css"
-import { Box, TextField } from '@mui/material'
-import {EmailIcon, PadLock, UserIcon} from "./componentsIcons/index"
-import logo from "../images/logo.png"
+import { Link} from 'react-router-dom'
+import { useAuth } from '../../context'
+import { Box, Grid, TextField } from '@mui/material'
+import {EmailIcon, GoogleIcon, PadLock, UserIcon} from "../componentsIcons/index"
 
 const Register = () => {
     const [user, setUser] = useState({name: "", email: "", username: "", password: "", confirmPassword: ""})
@@ -14,8 +13,6 @@ const Register = () => {
     const [equal, setEqual] = useState(false)
     const { signup, signupWithGoogle } = useAuth()
     
-    const navigate = useNavigate()
-
     const handleSignUpGoogle= async()=>{
     try{
       await signupWithGoogle()
@@ -24,6 +21,8 @@ const Register = () => {
       return
     }
     }
+
+
     const handleSubmit = async(e) => {
         e.preventDefault()
         if(!user.name || !user.email || !user.username || !user.password || !user.confirmPassword) {
@@ -38,7 +37,7 @@ const Register = () => {
 
         try{
         await signup(user.email, user.password)
-        /* axios.post('/users', {
+        axios.post('/users', {
             ...user
           })
           .then(function (response) {
@@ -46,12 +45,10 @@ const Register = () => {
           })
           .catch(function (error) {
             console.log(error);
-          }); */
-          navigate("/login")
+          });
         }catch(err){
-            console.log(err)
-          }
-
+          return console.log(err)
+        }
     }
        
     const handleChange = ({target: {name, value}}) => {
@@ -62,59 +59,78 @@ const Register = () => {
     }
 
   return (
-    <div className={style.divBackground}>
+    <Box>
       
-      <div className={style.containerRegisterDiv}>
-      <div className={style.divBackground}>
+      <Box className="containerRegisterDiv">
+        
+      <Box className="divBackground">
         <h1 style={{fontSize: "5em", padding: "50px"}}>
           Welcome,<br />
           the best is <br/>
           yet to come.
           </h1>
-      </div>
-      <div className={style.registerContainer}>
-        <div>
-          <h1>Sign up</h1>
-        <h4>if you already have an account you can <Link to="/login">Login here !</Link></h4>
+      </Box>
 
+      <Box className="registerContainer">
+        <Box className="containAll">
+
+        <Box className='containerTitle'>
+          <h1 style={{fontSize: "40px"}}>Sign up</h1>
+        <h4 style={{ margin: "5px 0", height: "20px"}}>if you already have an account</h4>
+        <h4 style={{ margin: "5px 0", height: "20px"}}>you can <Link style={{color:"#00FFD6", textDecoration:"none"}}  to="/login"> Login here !</Link></h4>
+        </Box>
+
+
+        <Box style={{display: "flex",justifyContent: "center", width: "100%", flexDirection:"column"}}>
         <form onSubmit={(e) => handleSubmit(e)}> 
+        <Box className="orderForm">
 
          <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
           <UserIcon />
-        <TextField  variant="standard"  label="Name" name='name'
+        <TextField className="input" type="text" required={true} autoComplete='off' variant="standard"  label="Name" name='name'
          onChange={(e) =>handleChange(e)} value={user.name}/>
           </Box >   
 
-        <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+        <Box sx={{ display: 'flex', alignItems: 'flex-end', gap: "5px" }}>
           <EmailIcon />
-        <TextField label="Email" name='email'
+        <TextField className="input" type="email" required={true} autoComplete='off' variant="standard" label="Email" name='email'
          onChange={(e) =>handleChange(e)} value={user.email}/>
         </Box >
         
         <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
         <UserIcon />
-        <TextField  variant="standard"  label="Username" name='username'
+        <TextField className="input" type="text" required={true} autoComplete='off' variant="standard"  label="Username" name='username'
          onChange={(e) =>handleChange(e)} value={user.username}/>
         </Box>
 
         <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
           <PadLock/>
-        <TextField className='sfas' variant="standard"  label="Password" name='password' 
+        <TextField className="input" type="password" required={true} autoComplete='off' variant="standard"  label="Password" name='password' 
         onChange={(e) =>handleChange(e)} value={user.password}/>
         </Box >
 
         <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
         <PadLock/>
-        <TextField variant="standard"  color="primary"  label="ConfirmPassword" name='confirmPassword' onChange={(e) =>handleChange(e)} value={user.confirmPassword}/>
+        <TextField className="input" type="password" required={true} autoComplete='off' variant="standard"  label="Confirm Password" name='confirmPassword' onChange={(e) =>handleChange(e)} value={user.confirmPassword}/>
         </Box >
-        
-        <button type='submit'>Register</button>
-        </form>
-        <button onClick={() => handleSignUpGoogle()}>Register with Google</button>
-        </div>
-        </div>
-        </div>
-    </div>
+        <Box style={{display: "flex",justifyContent: "center"}}>
+        <button className='btnRL' type='submit'>Register</button>
+        </Box>
+
+        </Box>
+      </form>
+      <Grid className="googleBox" alignItems="center" justifyContent="center" direction="column" container>
+  <h5 style={{width: "auto"}}>or continue with</h5>
+  <button className='googleButton' onClick={() => handleSignUpGoogle()}>
+    <GoogleIcon/>
+    </button>
+    </Grid>
+      </Box>
+      </Box>
+
+      </Box>
+  </Box>
+</Box>
   )
 }
 
