@@ -21,7 +21,6 @@ module.exports = (sequelize) => {
       plan: {
         type: DataTypes.ENUM("Regular", "Premium"),
         allowNull: false,
-        defaultValue: "Regular"
       },
       email: {
         type: DataTypes.STRING,
