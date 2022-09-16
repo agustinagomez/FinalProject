@@ -1,5 +1,5 @@
 import React from "react";
-import SearchBar from "./SearchBar";
+// import SearchBar from "./SearchBar";
 
 const Explore = () => {
   return (
@@ -7,7 +7,7 @@ const Explore = () => {
       <h1 className="text-xs underline">Explore.</h1>
       <div className="flex">
         <div>
-          <SearchBar />
+          {/* <SearchBar /> */}
         </div>
         <div>
           <button>Filters</button>
