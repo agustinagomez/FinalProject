@@ -12,7 +12,6 @@ const Login = () => {
   const [error, setError] = useState({ password: "", email: "" });
   const { login, loginWithGoogle, userFirebase } = useAuth();
   const navigate = useNavigate();
-
     useEffect(()=>{
       console.log(userFirebase)
         if (userFirebase !== null) navigate("/home");

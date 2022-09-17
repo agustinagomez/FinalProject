@@ -11,12 +11,10 @@ import { useAuth } from '../../context';
 export default function Home() {
     const dispatch = useDispatch()
     const posts = useSelector(state => state.posts.possListAll)
-    const { userFirebase, logout } = useAuth(); 
+    const { logout } = useAuth(); 
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log(userFirebase)
-        if (typeof userFirebase !== "object" ) navigate("/login");
         dispatch(getPost())
     }, [])
 
