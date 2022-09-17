@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@mui/material';
+import { Button, Grid, Typography } from '@mui/material';
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
@@ -24,14 +24,12 @@ export default function Home() {
         <Grid container xs={12} className={style.home}>
             <Grid item container xs={3} direction="column" className={style.sideBar} p={`1%`}>
                 <Grid item>
-                <button style={{backgroundColor: "white"}}
-    onClick={() => {
-      logout();
-      navigate("/login");
-    }}
-  >
-   Logout
-  </button> 
+                    <Button sx={{backgroundColor: "white"}}
+                     onClick={() => {
+                        logout();
+                        navigate("/login");
+                     }}
+                     >Logout</Button> 
                     <Typography variant='body1' className={style.text}>
                         Home
                     </Typography>

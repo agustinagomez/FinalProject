@@ -1,4 +1,4 @@
-import { Box, Button, Grid, TextField } from "@mui/material";
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,7 +6,6 @@ import { useAuth } from "../../context";
 import { Arrow, EmailIcon, GoogleIcon, PadLock } from "../componentsIcons";
 import style from "./login.module.css";
 import logo from "../../images/logoicon.png";
-
 const Login = () => {
   const [user, setUser] = useState({ password: "", email: "" });
   const [error, setError] = useState({ password: "", email: "" });
@@ -14,7 +13,6 @@ const Login = () => {
   const navigate = useNavigate();
 
     useEffect(()=>{
-      console.log(userFirebase)
         if (userFirebase !== null) navigate("/home");
     })
   const handleSubmit = async (e) => {
@@ -51,13 +49,14 @@ const Login = () => {
             <Arrow />
           </button>
 
-          <h1
-            style={{
+          <Typography variant="h1"
+            sx={{
               fontSize: "5em",
               padding: "5px 0 5px 10%",
               position: "relative",
               zIndex: "5",
               margin: "5px",
+              fontWeight:"600"
             }}
           >
             Hey!
@@ -65,7 +64,7 @@ const Login = () => {
             Welcome
             <br />
             Back.
-          </h1>
+          </Typography>
           <Box className={style.divBackgroundColor} />
           <Box className={style.backgroundImage} />
           <img className={style.logo} src={logo} alt="logo" />
@@ -76,11 +75,11 @@ const Login = () => {
             <Box className={style.space} />
 
             <Box className={style.containerTitle}>
-              <h1 style={{ fontSize: "40px" }}>Sign up</h1>
-              <h4 style={{ margin: "5px 0", height: "20px" }}>
+              <Typography variant="h2" >Log in</Typography>
+              <Typography variant="h4" component="h3" m="5px 0">
                 If you don’t have an account{" "}
-              </h4>
-              <h4 style={{ margin: "5px 0", height: "20px" }}>
+              </Typography>
+              <Typography variant="h6" component="h4" sx={{ margin: "5px 0", height: "20px", fontWeight:"600" }}>
                 you can
                 <Link
                   style={{ color: "#00FFD6", textDecoration: "none" }}
@@ -89,7 +88,7 @@ const Login = () => {
                   {" "}
                   Register here !
                 </Link>
-              </h4>
+              </Typography>
             </Box>
 
             <form style={{ width: "100%" }} onSubmit={(e) => handleSubmit(e)}>
@@ -127,7 +126,10 @@ const Login = () => {
                     value={user.password}
                   />
                 </Box>
-
+                <Box textAlign="right">
+                  <Link style={{ color: "#00FFD6", textDecoration: "none", fontWeight: "100" }} to="/passwordreset">Forgot password?</Link>
+                </Box>
+                
                 <Box style={{ display: "flex", justifyContent: "center" }}>
                   <Button className={style.btnRL} type="submit">
                     Login

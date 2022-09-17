@@ -1,14 +1,3 @@
-.container p,
-li,
-button,
-input,
-h1,
-h2,
-h3,
-h4 {
-  font-family: "Inter", sans-serif;
-}
-
 .fondo {
   position: fixed;
   left: 0;
@@ -69,7 +58,7 @@ h4 {
   transition: 0.5s;
 }
 
-.genresContainer input:checked ~ label {
+.genresContainer input:checked~label {
   background-color: rgba(0, 255, 214, 1);
 }
 
@@ -106,11 +95,11 @@ h4 {
   cursor: pointer;
   font-size: 25px;
   position: absolute;
-  left: calc(50% - 10px / 2 );
+  left: calc(50% - 10px / 2);
   top: calc(50% - 40px);
 }
 
-.songContainer p:hover{
+.songContainer p:hover {
   color: rgba(0, 226, 190, 1);
 }
 

@@ -31,7 +31,7 @@ const Register = () => {
     confirmPassword: "",
   });
 
-  const { signup, signupWithGoogle, userFirebase, logout } = useAuth();
+  const { signup, signupWithGoogle, userFirebase } = useAuth();
   const navigate = useNavigate();
   
   useEffect(()=>{
@@ -41,12 +41,11 @@ const Register = () => {
     try {
       /// span si el usuario ya esta registrado
       await signupWithGoogle();
-      logout()
     } catch (err) {
       console.log(err);
       return;
     }
-    navigate("/login");
+    navigate("/home");
   };
 
   const handleSubmit = async (e) => {
