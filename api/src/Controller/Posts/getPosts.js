@@ -1,4 +1,4 @@
-const { Posts, Genres } = require('../../db.js');
+const { Posts, Genres } = require("../../db.js");
 
 const getPosts = async (req, res) => {
   try {
@@ -6,7 +6,7 @@ const getPosts = async (req, res) => {
       include: {
         model: Genres,
         attributes: ["name"],
-        through: { attributes: [] }
+        through: { attributes: [] },
       },
     });
     return res.json(findPost);
