@@ -11,20 +11,10 @@ const createReport = async (req, res) => {
     });
 
     // let users = await Users.findByPk(userId);
-    let users = await Users.findOne({
-      where: {
-        id: userId,
-      },
-    });
+    let users = await Users.findByPk(userId);
     await newReport.setUser(users);
 
-    // let posts = await Posts.findByPk(postId);
-
-    let posts = await Posts.findOne({
-      where: {
-        id: postId,
-      },
-    });
+    let posts = await Posts.findByPk(postId);
     await newReport.setPost(posts);
 
     res.json("Report created successfully");
