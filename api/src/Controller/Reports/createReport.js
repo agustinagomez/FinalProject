@@ -1,7 +1,8 @@
 const { Report, Posts, Users } = require("../../db.js");
+const { Op } = require("sequelize");
 
 const createReport = async (req, res) => {
-  let { content, title, idUser, idPost } = req.body;
+  let { content, title, userId, postId } = req.body;
 
   try {
     let newReport = await Report.create({
@@ -9,10 +10,21 @@ const createReport = async (req, res) => {
       title,
     });
 
-    let users = await Users.findByPk(idUser);
+    // let users = await Users.findByPk(userId);
+    let users = await Users.findOne({
+      where: {
+        id: userId,
+      },
+    });
     await newReport.setUser(users);
 
-    let posts = await Posts.findByPk(idPost);
+    // let posts = await Posts.findByPk(postId);
+
+    let posts = await Posts.findOne({
+      where: {
+        id: postId,
+      },
+    });
     await newReport.setPost(posts);
 
     res.json("Report created successfully");
