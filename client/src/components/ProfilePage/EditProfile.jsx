@@ -3,10 +3,10 @@ import styles from "./EditProfile.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Link, TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { updateUser } from "../../redux/features/users/usersGetSlice";
 import { storage } from "../../firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "@firebase/storage";
 import Loading from "../loading/Loading";
 import PayButton from "../pay/PayButton";
 
@@ -72,10 +72,10 @@ const EditProfile = (close) => {
   }
 
   function handleSubmit() {
-      dispatch(updateUser(currentUser.id, input));
-      const func = (function (){
-        window.location.reload();
-      })()
+    dispatch(updateUser(currentUser._id, input));
+    const func = (function () {
+      window.location.reload();
+    })();
   }
 
   return (
@@ -160,8 +160,10 @@ const EditProfile = (close) => {
             </label>
           </div>
         ) : (
-          <div style={{display: "flex", alignItems: "center"}}>
-            <p style={{ color: "white", fontSize: "14px", marginRight: "10px" }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <p
+              style={{ color: "white", fontSize: "14px", marginRight: "10px" }}
+            >
               Go premium to modify the banner!
             </p>
             <PayButton />

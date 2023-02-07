@@ -1,26 +1,31 @@
-import { doc, onSnapshot } from "firebase/firestore";
-import React, {useEffect, useState } from "react";
+import { doc, onSnapshot } from "@firebase/firestore";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../../../context";
 import { db } from "../../../firebase";
 import { changeUserChat } from "../../../redux/features/chat/chatGetSlice";
 import { getUserByFirebaseId } from "../../../redux/features/users/usersGetSlice";
-import s from './Conversations.module.css'
+import s from "./Conversations.module.css";
 
 const Conversations = () => {
   const [conversations, setConversations] = useState([]);
-  const currentUser = useSelector(state => state.users.currentUser)
-  const dispatch = useDispatch()
-  const {userFirebase} = useAuth()
+  const currentUser = useSelector((state) => state.users.currentUser);
+  const dispatch = useDispatch();
+  const { userFirebase } = useAuth();
 
-  useEffect(()=> {
-    !currentUser && dispatch(getUserByFirebaseId(userFirebase?.uid))
-  }, [])
+  useEffect(() => {
+    !currentUser && dispatch(getUserByFirebaseId(userFirebase?.uid));
+  }, []);
   useEffect(() => {
     const getConversations = () => {
-      const unsub = onSnapshot(doc(db, "userConversations", currentUser.idgoogle), (doc) => {
-        setConversations(Object.entries(doc?.data()).sort((a,b)=>b[1].date - a[1].date));
-      });
+      const unsub = onSnapshot(
+        doc(db, "userConversations", currentUser.idgoogle),
+        (doc) => {
+          setConversations(
+            Object.entries(doc?.data()).sort((a, b) => b[1].date - a[1].date)
+          );
+        }
+      );
       return () => {
         unsub();
       };
@@ -29,8 +34,19 @@ const Conversations = () => {
   }, [currentUser?.idgoogle]);
 
   const handleSelect = (u) => {
-    dispatch(changeUserChat({destination: {name: u.displayName, idgoogle: u.uid, avatar: u.photoURL},
-    chatId: currentUser.idgoogle > u.uid ? currentUser.idgoogle + u.uid : u.uid + currentUser.idgoogle}))
+    dispatch(
+      changeUserChat({
+        destination: {
+          name: u.displayName,
+          idgoogle: u.uid,
+          avatar: u.photoURL,
+        },
+        chatId:
+          currentUser.idgoogle > u.uid
+            ? currentUser.idgoogle + u.uid
+            : u.uid + currentUser.idgoogle,
+      })
+    );
   };
 
   return (
@@ -41,9 +57,16 @@ const Conversations = () => {
           key={chat[0]}
           onClick={() => handleSelect(chat[1].userInfo)}
         >
-          <img className={s.profilePic} src={chat[1].userInfo.photoURL} alt="" width='50px' />
+          <img
+            className={s.profilePic}
+            src={chat[1].userInfo.photoURL}
+            alt=""
+            width="50px"
+          />
           <div className={s.userChatInfo}>
-            <span className={s.userChatName}>{chat[1].userInfo.displayName}</span>
+            <span className={s.userChatName}>
+              {chat[1].userInfo.displayName}
+            </span>
             <p className={s.lastMessage}>{chat[1].lastMessage?.text}</p>
           </div>
         </div>

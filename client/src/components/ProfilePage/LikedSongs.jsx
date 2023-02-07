@@ -9,19 +9,21 @@ const LikedSongs = (id) => {
   const dispatch = useDispatch();
   const profileUser = useSelector((state) => state.users.user);
   const allUserLikes = useSelector((state) => state.users.userLikes);
-  const [userLikes, setUserLikes] = useState(allUserLikes.filter((likes) => likes.isActive))
+  const [userLikes, setUserLikes] = useState(
+    allUserLikes.filter((likes) => likes.isActive)
+  );
   const posts = useSelector((state) => state.posts.postList);
-  
+
   useEffect(() => {
     dispatch(getUserById(id));
   }, [dispatch]);
-  
+
   useEffect(() => {
-    setUserLikes(allUserLikes.filter((likes) => likes.isActive))
+    setUserLikes(allUserLikes.filter((likes) => likes.isActive));
   }, [allUserLikes]);
 
   function likePostCover(id) {
-    const postLiked = posts.find((post) => post.id === id);
+    const postLiked = posts.find((post) => post._id === id);
     return postLiked;
   }
 

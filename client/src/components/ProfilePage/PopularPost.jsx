@@ -12,7 +12,7 @@ const PopularPost = (post) => {
   }, []);
 
   async function getLikes() {
-    const res = await axios.get(`/likes/posts/${post.post.id}`);
+    const res = await axios.get(`/likes/posts/${post.post._id}`);
     setLikes(res.data);
   }
 

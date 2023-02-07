@@ -23,11 +23,19 @@ import { useDispatch, useSelector } from "react-redux";
 import LoadingProtectRoute from "../../context/LoadingProtectRoute";
 import axios from "axios";
 import Conditions from "../conditions/Conditions";
+import { userExistGoogle } from "../utils";
 
 const Login = () => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users.usersListAll);
-  const [googleUser, setGoogleUser] = useState();
+  const [googleUser, setGoogleUser] = useState({
+    name: "",
+    username: "",
+    password: "",
+    email: "",
+    idgoogle: "",
+    avatar: "",
+  });
   const [user, setUser] = useState({ password: "", email: "" });
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -40,16 +48,8 @@ const Login = () => {
     severity: "",
   });
   const [showConditions, setShowConditions] = useState(false);
-  const {
-    login,
-    loginWithGoogle,
-    userFirebase,
-    resetPassword,
-    getAdditionalUserInfo,
-  } = useAuth();
+  const { login, loginWithGoogle, userFirebase, resetPassword } = useAuth();
   const navigate = useNavigate();
-  //const [error, setError] = useState({ password: "", email: "" });
-  //const usersListAll = useSelector((state) => state.usersListAll);
 
   useEffect(() => {
     if (
@@ -57,7 +57,7 @@ const Login = () => {
       users?.filter((u) => u.email === googleUser.email).length === 0
     ) {
       axios
-        .post("/users", {
+        .post("/create/users", {
           ...googleUser,
         })
         .then(function (response) {
@@ -102,21 +102,21 @@ const Login = () => {
   const handleSignInGoogle = async () => {
     try {
       const res = await loginWithGoogle();
-      //console.log(getAdditionalUserInfo(res))
-      setGoogleUser({
+      let newUser = {
         name: res.user.email.split("@")[0],
         username: res.user.email.split("@")[0],
         password: res.user.email,
         email: res.user.email,
         idgoogle: res.user.uid,
         avatar: res.user.photoURL,
-      });
-
-      navigate("/home");
+      };
+      userExistGoogle(newUser);
+      setGoogleUser(newUser);
     } catch (err) {
       console.log(err);
       return;
     }
+    navigate("/home");
   };
 
   const handleSendPasswordReset = async (email) => {
@@ -298,7 +298,7 @@ const Login = () => {
               <h5 style={{ width: "auto", margin: "5px" }}>or continue with</h5>
               <Button
                 sx={{ padding: "20px", borderRadius: "50%" }}
-                onClick={() => handleSignInGoogle("/")}
+                onClick={() => handleSignInGoogle()}
                 className={style.googleButton}
               >
                 <GoogleIcon />

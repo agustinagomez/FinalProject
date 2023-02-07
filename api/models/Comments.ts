@@ -1,6 +1,14 @@
 import { model, Schema } from "mongoose";
 
 const comment = new Schema({
+    idUser: {
+        type: String,
+        require: true
+    },
+    idPost: {
+        type: String,
+        require: true
+    },
     content: {
         type: String,
         require: true
@@ -9,5 +17,6 @@ const comment = new Schema({
         type: Date,
         default: Date.now()
     }
+
 })
 export default model("Comment", comment)

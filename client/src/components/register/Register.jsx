@@ -101,7 +101,7 @@ const Register = () => {
         idgoogle: res.user.uid,
       };
 
-      await userExistGoogle(googleUser, users);
+      await userExistGoogle(googleUser);
     } catch (err) {
       return console.log(err);
     }
@@ -119,8 +119,7 @@ const Register = () => {
         email: res.user.email,
         idgoogle: res.user.uid,
       };
-
-      await userExistGoogle(googleUser, users);
+      await userExistGoogle(googleUser);
     } catch (err) {
       return console.log(err);
     }

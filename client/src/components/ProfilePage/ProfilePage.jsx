@@ -7,7 +7,7 @@ import {
   setUserFollow,
   setUserUnfollow,
   createUserNotification,
-  cleanUserState
+  cleanUserState,
 } from "../../redux/features/users/usersGetSlice";
 import { getPost } from "../../redux/features/post/postGetSlice";
 import { Stack, ThemeProvider } from "@mui/system";
@@ -24,8 +24,14 @@ import EditProfile from "./EditProfile";
 import Upload from "../Upload/Upload";
 import { changeUserChat } from "../../redux/features/chat/chatGetSlice";
 import PlayAllButton from "../PlayAllButton/PlayAllButton";
-import { doc, getDoc, serverTimestamp, setDoc, updateDoc } from "firebase/firestore";
-import { db } from '../../firebase'
+import {
+  doc,
+  getDoc,
+  serverTimestamp,
+  setDoc,
+  updateDoc,
+} from "@firebase/firestore";
+import { db } from "../../firebase";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
@@ -59,35 +65,35 @@ const ProfilePage = () => {
   });
 
   function getFollowOfThisUser() {
-    let check
+    let check;
     if (profileUserFollowers) {
-      check = profileUserFollowers.find(
-        (user) => user.id === currentUser.id
-      );
+      check = profileUserFollowers.find((user) => user._id === currentUser._id);
     }
     if (check !== undefined) {
       setFollowed(true);
     } else {
       setFollowed(false);
     }
-    return check
+    return check;
   }
 
-  const notification = async() => {
-    if (currentUser.id !== profileUser.id) {
-      await dispatch(createUserNotification({
+  const notification = async () => {
+    if (currentUser._id !== profileUser._id) {
+      await dispatch(
+        createUserNotification({
           title: JSON.stringify({
-            name:`${currentUser.username} has started following you.`,
+            name: `${currentUser.username} has started following you.`,
             img: currentUser.avatar,
-            post: '',
+            post: "",
           }),
-          content: '',
-          userId: profileUser.id,
-          fromUser: currentUser.id,
-
-      }));
-        console.log("notification created!")
-      }};
+          content: "",
+          userId: profileUser._id,
+          fromUser: currentUser._id,
+        })
+      );
+      console.log("notification created!");
+    }
+  };
 
   const handleOpen = () => {
     setOpen(true);
@@ -105,22 +111,22 @@ const ProfilePage = () => {
     setOpenSettings(false);
   };
 
-  const handleFollow = async() => {
-  await  dispatch(
+  const handleFollow = async () => {
+    await dispatch(
       setUserFollow({
-        idUser: currentUser.id,
-        followTo: profileUser.id,
+        idUser: currentUser._id,
+        followTo: profileUser._id,
       })
     );
-    await notification()
+    await notification();
     setFollowed(true);
   };
 
   const handleUnfollow = () => {
     dispatch(
       setUserUnfollow({
-        idUser: currentUser.id,
-        followTo: profileUser.id,
+        idUser: currentUser._id,
+        followTo: profileUser._id,
       })
     );
     setFollowed(false);
@@ -138,9 +144,12 @@ const ProfilePage = () => {
     },
   });
 
-  const handleOnSelect = async() => {
-    const combinedId = currentUser.idgoogle > profileUser.idgoogle ? currentUser.idgoogle + profileUser.idgoogle : profileUser.idgoogle + currentUser.idgoogle;
-    dispatch(changeUserChat({destination: profileUser, chatId: combinedId}))
+  const handleOnSelect = async () => {
+    const combinedId =
+      currentUser.idgoogle > profileUser.idgoogle
+        ? currentUser.idgoogle + profileUser.idgoogle
+        : profileUser.idgoogle + currentUser.idgoogle;
+    dispatch(changeUserChat({ destination: profileUser, chatId: combinedId }));
     try {
       const res = await getDoc(doc(db, "chats", combinedId));
 
@@ -167,7 +176,9 @@ const ProfilePage = () => {
           [combinedId + ".date"]: serverTimestamp(),
         });
       }
-    } catch (err){console.log(err)}
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -218,7 +229,7 @@ const ProfilePage = () => {
               </div>
             </div>
             <div className={styles.optionsContainer}>
-              {currentUser.id === profileUser.id ? (
+              {currentUser._id === profileUser._id ? (
                 <FontAwesomeIcon
                   onClick={handleOpen}
                   className={styles.optionsButton}
@@ -257,7 +268,7 @@ const ProfilePage = () => {
                     <PlayAllButton songs={artistPosts} />
                   </div>
                 ) : null}
-                {currentUser.id !== profileUser.id ? (
+                {currentUser._id !== profileUser._id ? (
                   !followed ? (
                     <Button
                       onClick={handleFollow}
@@ -301,7 +312,7 @@ const ProfilePage = () => {
                   )
                 ) : null}
               </div>
-              {currentUser.id !== profileUser.id ? (
+              {currentUser._id !== profileUser._id ? (
                 <div>
                   <p
                     style={{
@@ -337,7 +348,7 @@ const ProfilePage = () => {
             ) : (
               <div>
                 <div className={styles.popuAndLiked}>
-                  {currentUser.id === profileUser.id ? (
+                  {currentUser._id === profileUser._id ? (
                     <div className={styles.noPostsYet}>
                       <p>Share your music with other users</p>
                       <button className={styles.buttonPost}>

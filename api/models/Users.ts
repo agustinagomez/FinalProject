@@ -11,13 +11,13 @@ const user = new Schema({
   },
   role: {
     type: String,
-    require: true,
-    enum: ["User", "Admin"]
+    enum: ["User", "Admin"],
+    default: "User"
   },
   plan: {
     type: String,
-    enum: ["Regular", "Premium"]
-
+    enum: ["Regular", "Premium"],
+    default: "Regular"
   },
   email: {
     type: String,
@@ -56,11 +56,5 @@ const user = new Schema({
   expirationDate: {
     type: Date,
   },
-  posts: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Posts"
-    }
-  ]
 })
 export default model("User", user)

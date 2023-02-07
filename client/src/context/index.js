@@ -8,7 +8,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-} from "firebase/auth";
+} from "@firebase/auth";
 import { auth } from "../firebase";
 import { useState, useEffect } from "react";
 
@@ -21,8 +21,8 @@ export const useAuth = () => {
 
 export function AuthProvider({ children }) {
   const [userFirebase, setUserFirebase] = useState(null);
-  const [loading, setLoading] = useState(true)
-  
+  const [loading, setLoading] = useState(true);
+
   const signup = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
@@ -37,16 +37,15 @@ export function AuthProvider({ children }) {
 
   const loginWithGoogle = () => {
     const googleProvider = new GoogleAuthProvider();
-    return signInWithPopup(auth, googleProvider)
+    return signInWithPopup(auth, googleProvider);
   };
-
 
   const resetPassword = async (email) => sendPasswordResetEmail(auth, email);
 
   useEffect(() => {
     const unsuscribe = onAuthStateChanged(auth, (currentUser) => {
       setUserFirebase(currentUser);
-      setLoading(false)
+      setLoading(false);
     });
     return () => {
       unsuscribe();
@@ -62,7 +61,7 @@ export function AuthProvider({ children }) {
         resetPassword,
         getAdditionalUserInfo,
         userFirebase,
-        loading
+        loading,
       }}
     >
       {children}

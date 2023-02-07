@@ -1,8 +1,27 @@
 import axios from "axios";
 
-import { addUsers, deleteUsers, getUserError, getUserStart, getUserSuccess, updateUsers, getById, getByFirebaseId, getUpdatePremium, getLikes, setGenres, getNotifications, createNotification, watchedNotification, disabledNotification, cleanUser, getDownToRegular, setFollow, setUnfollow, getUserDataGraphs } from "./usersSlice";
-
-
+import {
+  addUsers,
+  deleteUsers,
+  getUserError,
+  getUserStart,
+  getUserSuccess,
+  updateUsers,
+  getById,
+  getByFirebaseId,
+  getUpdatePremium,
+  getLikes,
+  setGenres,
+  getNotifications,
+  createNotification,
+  watchedNotification,
+  disabledNotification,
+  cleanUser,
+  getDownToRegular,
+  setFollow,
+  setUnfollow,
+  getUserDataGraphs,
+} from "./usersSlice";
 
 //obtener los users
 export const getUser = () => {
@@ -70,113 +89,111 @@ export const deleteUser = (id) => {
 export const getUserById = (id) => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`/users/${id}`)
-      dispatch(getById(response.data))
+      const response = await axios.get(`/users/${id}`);
+      dispatch(getById(response.data));
     } catch (error) {
       console.log(error);
     }
-  }
-}
+  };
+};
 
 export const cleanUserState = () => {
   return async (dispatch) => {
     try {
-      dispatch(cleanUser())
+      dispatch(cleanUser());
     } catch (error) {
       console.log(error);
     }
-  }
-}
+  };
+};
 
 export const getUserByFirebaseId = (id) => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`/users/idgoogle/${id}`)
-      dispatch(getByFirebaseId(response.data))
-      dispatch(getUserNotification(response.data.id))
+      const response = await axios.get(`/users/idgoogle/${id}`);
+      dispatch(getByFirebaseId(response.data));
+      dispatch(getUserNotification(response.data._id));
+    } catch (error) {
+      console.log(error);
     }
-      catch (error) {
-      console.log(error)
-    }
-  }
-}
-
+  };
+};
 
 export const getUserUpdatePremium = (id) => {
   return async (dispatch) => {
     try {
-      const response = await axios.put(`/users/premium/${id}`)
-      dispatch(getUpdatePremium(response.data))
+      const response = await axios.put(`/users/premium/${id}`);
+      dispatch(getUpdatePremium(response.data));
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 };
 
 export const getUserDownToRegular = (id) => {
   return async (dispatch) => {
-   try {
-      const response = await axios.put(`/users/regular/${id}`)
-      dispatch(getDownToRegular(response.data))
-   } catch (error) {
-     console.log(error);
-   }
-  }
+    try {
+      const response = await axios.put(`/users/regular/${id}`);
+      dispatch(getDownToRegular(response.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };
 
 export const getUserLikes = (id) => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`/likes/users/${id}`)
-      dispatch(getLikes(response.data))
+      const response = await axios.get(`/likes/users/${id}`);
+      dispatch(getLikes(response.data));
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 };
 
 export const getUserNotification = (id) => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`/notifications/${id}`)
-      await  dispatch(getNotifications(response.data))
+      const response = await axios.get(`/notifications/${id}`);
+      await dispatch(getNotifications(response.data));
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 };
 
 export const createUserNotification = (value) => {
   return async (dispatch) => {
     try {
-    const response = await axios.post('/notifications/create', value)
-    //  dispatch(createNotification(response.data))
-  } catch (error) {
-    console.log(error);
-  }
-}
-};
-
-export const watchedUserNotification = (id) => {
- return async(dispatch) => {
-  try {
-    const response = await axios.put(`/notifications/watched/${id}`)
-    dispatch(watchedNotification(response.data))
-  } catch (error) {
-    console.log(error);
-  }
- }
-};
-
-export const disabledUserNotification = (id) => {
-  return async(dispatch) => {
-    try {
-      const response = await axios.put(`/notifications/disabled/${id}`)
-      dispatch(disabledNotification(response.data))
+      const response = await axios.post("/notifications/create", value);
+      dispatch(createNotification(response.data));
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+};
+
+export const watchedUserNotification = (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(`/notifications/watched/${id}`);
+      dispatch(watchedNotification(response.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const disabledUserNotification = (id) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.put(`/notifications/disabled/${id}`);
+      dispatch(disabledNotification(response.data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };
 
 export const setUserFollow = (body) => {
@@ -208,12 +225,12 @@ export const setUserUnfollow = (body) => {
 };
 
 export const getDataForGraphs = () => {
-  return async(dispatch) => {
+  return async (dispatch) => {
     try {
-      const response = await axios.get(`/users/data/graphs`)
-      dispatch(getUserDataGraphs(response.data))
+      const response = await axios.get(`/users/data/graphs`);
+      dispatch(getUserDataGraphs(response.data));
     } catch (error) {
       console.log(error);
     }
-  }
-}
+  };
+};

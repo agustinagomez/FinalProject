@@ -42,7 +42,7 @@ const Notification = () => {
   const handleWatched = () => {
     if (userNotification) {
       userNotification.forEach((el) => {
-        dispatch(watchedUserNotification(el.id));
+        dispatch(watchedUserNotification(el._id));
       });
     }
   };
@@ -50,7 +50,7 @@ const Notification = () => {
   const handleDelete = () => {
     if (userNotification) {
       userNotification.forEach((el) => {
-        dispatch(disabledUserNotification(el.id));
+        dispatch(disabledUserNotification(el._id));
       });
     }
   };
@@ -85,7 +85,7 @@ const Notification = () => {
                     userNotification?.map((user) => {
                       let data = JSON.parse(user?.title);
                       return (
-                        <div key={user.id}>
+                        <div key={user._id}>
                           <List className={style.list} sx={{ width: "100%" }}>
                             <ListItemButton>
                               <ListItem alignItems="flex-start">

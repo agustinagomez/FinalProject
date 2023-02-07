@@ -1,18 +1,14 @@
-import { Request, Response, Router } from "express";
-import Genres from "../../models/Genres";
+import { Request, Response } from "express";
 import Posts from "../../models/Posts";
 import Users from "../../models/Users";
 
-const router = Router()
 
-//POST ONE POST 
-router.post("/", async (req: Request, res: Response) => {
+const createPost = async (req: Request, res: Response) => {
     const { description, title, content, idUser, genres, type, cover, idShared } =
         req.body;
     if (!description || !title || !content || !idUser || !genres || !type || !cover || !idShared) return res.send("Empty body")
     try {
-        console.log(req.body)
-        const arrGenres = await Genres.find()
+        const arrGenres = Object.values(genres)
         const post = await Posts.create({
             description,
             title,
@@ -20,9 +16,10 @@ router.post("/", async (req: Request, res: Response) => {
             type,
             cover,
             idShared,
+            genres: arrGenres
         });
 
-        const user = await Users.find({ id: idUser });
+        const user = await Users.find({ _id: idUser });
 
 
 
@@ -30,6 +27,6 @@ router.post("/", async (req: Request, res: Response) => {
     } catch (err) {
         return res.status(500).send(err);
     }
-})
+}
 
-export default router
+export default createPost;

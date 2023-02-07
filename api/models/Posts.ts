@@ -17,6 +17,10 @@ const post = new Schema({
         ref: "User",
         type: Schema.Types.ObjectId
     },
+    genres: {
+        type: Array,
+        require: true
+    },
     duration: String,
     content: String,
     cover: String,

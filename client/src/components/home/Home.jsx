@@ -17,11 +17,9 @@ export default function Home() {
   const { userFirebase } = useAuth();
   useEffect(() => {
     dispatch(getPost());
-    dispatch(getUserByFirebaseId(userFirebase.uid))
-    dispatch(clearPost())
+    dispatch(getUserByFirebaseId(userFirebase.uid));
+    dispatch(clearPost());
   }, []);
-
-console.log(userDB);
 
   return (
     <div className={style.home}>
@@ -30,13 +28,27 @@ console.log(userDB);
         <Typography
           variant="h2"
           component="h1"
-          sx={{ fontWeight: "700", color: "white", paddingTop: "20px", paddingBottom:"10px"}}
+          sx={{
+            fontWeight: "700",
+            color: "white",
+            paddingTop: "20px",
+            paddingBottom: "10px",
+          }}
         >
           Home
         </Typography>
         {/* <PostShared postShared={postShared}/> */}
         {posts.length > 0 &&
-          posts.slice(0).reverse().map((post, i) => post.idShared ? <PostShared postShared={post} /> : <Post key={i} post={post} comments={false} />)}
+          posts
+            .slice(0)
+            .reverse()
+            .map((post, i) =>
+              post.idShared ? (
+                <PostShared postShared={post} />
+              ) : (
+                <Post key={i} post={post} comments={false} />
+              )
+            )}
       </div>
     </div>
   );
