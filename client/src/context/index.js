@@ -9,7 +9,7 @@ import {
   signInWithPopup,
   signOut,
 } from "@firebase/auth";
-import { auth } from "../firebase";
+import { auth } from "../firebase.js";
 import { useState, useEffect } from "react";
 
 export const authContext = createContext();

@@ -15,7 +15,7 @@ import s from "./Upload.module.css";
 import { storage } from "../../firebase.js";
 import { getDownloadURL, ref, uploadBytes } from "@firebase/storage";
 import { useDispatch, useSelector } from "react-redux";
-import { createdPost, getPost } from "../../redux/features/post/postGetSlice";
+import { createdPost } from "../../redux/features/post/postGetSlice";
 import Loading from "../loading/Loading";
 import { useAuth } from "../../context";
 import { getUserByFirebaseId } from "../../redux/features/users/usersGetSlice";

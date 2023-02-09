@@ -1,10 +1,10 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+import "dotenv/config";
+import { AuthProvider } from "./context";
 import Login from "./components/login/Login";
 import Register from "./components/register/Register";
 import Explore from "./components/Explore/Explore";
-import { AuthProvider } from "./context";
-import "./App.css";
 import Landing from "./components/landing/Landing";
 import Home from "./components/home/Home";
 import ProtectedRoute from "./context/ProtectedRoute";
@@ -23,6 +23,7 @@ import LikedSongs from "./components/likedSongs/LikedSongs";
 import Success from "./components/success/Success";
 import AdminGraphs from "./components/admin/graphs/AdminGraphs";
 import Player from "./components/Player/Player.jsx";
+import "./App.css";
 
 function App() {
   return (

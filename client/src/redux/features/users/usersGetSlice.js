@@ -77,7 +77,7 @@ export const setUserGenres = (body) => {
 export const deleteUser = (id) => {
   return async (dispatch) => {
     try {
-      await axios.put(`/users/${id}`);
+      await axios.delete(`/users/${id}`);
       dispatch(deleteUsers());
       dispatch(getUser());
     } catch (error) {

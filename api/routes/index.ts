@@ -34,7 +34,7 @@ import deleteUser from "../controller/users/deleteUser";
 import downToRegular from "../controller/users/downToRegular";
 import getCountUserGraphs from "../controller/users/getCountUserGraphs";
 import getUserById from "../controller/users/getUserByIdAdmin";
-import getUserByIdGoogle from "../controller/users/getUserByIdGoogle";
+import getUserByidGoogle from "../controller/users/getUserByIdGoogle";
 import getUsers from "../controller/users/getUsers";
 import restoreUser from "../controller/users/restoreUser";
 import setUserGenres from "../controller/users/setUserGenres";
@@ -46,56 +46,82 @@ import upToPremium from "../controller/users/upToPremium";
 
 const router = Router();
 
+//GET
+
 router.get("/users", getUsers); //user
-router.get("/users/:userId", getUserById); //user
-router.get("/users/idgoogle/:idgoogle", getUserByIdGoogle); //user
+router.get("/users/:_id", getUserById); //user
+router.get("/users/idGoogle/:idGoogle", getUserByidGoogle); //user
+router.get("/users/data/graphs", getCountUserGraphs)
+
 router.get("/posts", getPosts);
 router.get("/posts/:_id", getPostById);
-router.get("/genres", getGenres);
-router.get("/notifications/:_id", getNotiByUser);
-router.get("/likes/users/:userId", getLikesByUserId);
-router.get("/likes/posts/:postId", getLikesByPostId);
-router.get("/likes/:postId/:userId", getLikesByPostandUserId);
-router.get("/comments/:idPost", getByPostId);
-router.get("/reviews", getReview);
-router.get("/reports", getReports); //Only for admin!
 router.get("/posts/order/popular", getPopular);
-router.get("/users/data/graphs", getCountUserGraphs)
 router.get("/posts/genres", getByGenre);
 router.get("/posts/genres/with-all", getByGenreWithAll);
 
+router.get("/genres", getGenres);
+
+router.get("/notifications/:_id", getNotiByUser);
+
+router.get("/likes/users/:userId", getLikesByUserId);
+router.get("/likes/posts/:postId", getLikesByPostId);
+router.get("/likes/:postId/:userId", getLikesByPostandUserId);
+
+router.get("/comments/:idPost", getByPostId);
+
+router.get("/reviews", getReview);
+
+router.get("/reports", getReports); //Only for admin!
+
+//POST
 
 router.post("/posts/order", getByTime);
 router.post("/posts/genres", getByGenre);
-router.post("/users", createUser);
+router.post("/posts/order/popular", getPopular);
 router.post("/posts", createPost);
-router.post("/likes", createLike);
-router.post("/comments", createComment);
+
+router.post("/users", createUser);
 router.post("/users/follow", addFollower);
 router.post("/users/unfollow", removeFollower);
-router.post('/notifications/create', createNoti);
-router.post("/reviews", createReview);
-router.post("/reports", createReport);
-router.post("/posts/order/popular", getPopular);
+
+router.post("/likes", createLike);
+
+router.post("/comments", createComment);
+
 router.post("/notifications/create", createNoti);
-router.post("/create-checkout-session", payment);
+router.post("/notifications/create", createNoti);
+
 router.post("/reviews", createReview);
+
+router.post("/reports", createReport);
+
+router.post("/create-checkout-session", payment);
+
+//DELETE
 
 router.delete("/users/:_id", deleteUser);
+
 router.delete("/posts/:_id", deletePost);
+
 router.delete("/comments/:_id", deleteComment);
 
+//PUT
+
 router.put("/users/:_id", updateUser);
-router.put("/posts/:_id", updatePost);
-router.put("/restore/:_id", restoreUser);
 router.put("/users/premium/:_id", upToPremium);
 router.put("/users/regular/:_id", downToRegular);
-router.put("/notifications/watched/:_id", setNotiWatched);
-router.put("/notifications/disabled/:id", setNotiDisabled);
-router.put("/likes", changeStatusLike);
 router.put("/users/set/plan", changePlanUser);
 router.put("/users/set/genres", setUserGenres);
 router.put("/users/set/update-ban", updateBanUser);
 router.put("/users/set/role", updateRoleUser);
+
+router.put("/notifications/watched/:_id", setNotiWatched);
+router.put("/notifications/disabled/:id", setNotiDisabled);
+
+router.put("/posts/:_id", updatePost);
+
+router.put("/restore/:_id", restoreUser);
+
+router.put("/likes", changeStatusLike);
 
 export default router;

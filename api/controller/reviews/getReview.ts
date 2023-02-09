@@ -1,10 +1,10 @@
 import { Request, Response } from "express"
-import Notifications from "../../models/Notifications"
+import Reviews from "../../models/Reviews"
 
 const getReview = async (_req: Request, res: Response) => {
     try {
-        const notifications = await Notifications.find()
-        return res.send(notifications)
+        const reviews = await Reviews.find()
+        return res.send(reviews)
     } catch (err) {
         return res.send(err)
     }

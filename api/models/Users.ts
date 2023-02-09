@@ -1,7 +1,7 @@
 import { model, Schema } from "mongoose";
 
 const user = new Schema({
-  idgoogle: {
+  idGoogle: {
     type: String,
     require: true
   },
