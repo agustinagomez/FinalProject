@@ -17,7 +17,7 @@ const Pleasures = () => {
   const genres = useSelector((state) => state?.genres?.genreList).slice(1);
   const currentUser = useSelector((state) => state.users.currentUser);
   const [genresSelected, setGenresSelected] = useState({
-    id: currentUser._id,
+    _id: currentUser._id,
     genres: [],
   });
   const [currentPage, setCurrentPage] = useState(1);
@@ -60,7 +60,7 @@ const Pleasures = () => {
       newChecked.splice(currentGenresChecked, 1);
     }
     setGenresSelected({
-      id: currentUser._id,
+      _id: currentUser._id,
       genres: newChecked.map((el) => el),
     });
   }

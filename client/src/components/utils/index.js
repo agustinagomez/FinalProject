@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const userExistGoogle = async (user) => {
   return axios
-    .post("/users/create", {
+    .post("/user", {
       ...user,
     })
     .then(function (response) {
@@ -16,7 +16,7 @@ export const userExistGoogle = async (user) => {
 export const userExistSignUp = (user, usersDB) => {
   if (user && !usersDB?.some((u) => u.email === user.email)) {
     return axios
-      .post("/users", {
+      .post("/user", {
         ...user,
       })
       .then(function (response) {

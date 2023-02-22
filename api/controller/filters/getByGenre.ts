@@ -7,7 +7,6 @@ const getByGenre = async (req: Request, res: Response) => {
 
 
     try {
-        console.log(genres)
 
         const posts = await Posts.find({ genres: { $in: genres } })
 

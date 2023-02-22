@@ -17,7 +17,7 @@ const Success = () => {
 
   const fetchUser = async () => {
     if (premium) {
-      const user = await axios.get(`/users/idgoogle/${userFirebase.uid}`);
+      const user = await axios.get(`/users/idGoogle/${userFirebase.uid}`);
       await dispatch(getUserUpdatePremium(user.data._id));
       localStorage.removeItem("premium");
     } else {

@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import Notifications from "../../models/Notifications";
-import Users from "../../models/Users";
-
 
 const createNoti = async (req: Request, res: Response) => {
 

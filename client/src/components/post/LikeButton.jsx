@@ -52,11 +52,11 @@ export default function LikeButton({ post }) {
     async function updateLikes() {
       if (click !== undefined) {
         await getLikes();
-        const res = await axios.get(`/likes/${post._id}/${currentUser._id}`);
+        const res = await axios.get(`/likes/count/${currentUser._id}`);
         const currentLike = (res.data && res.data[0]) || {};
         async function updateLike() {
           await axios.put(`/likes`, {
-            postId: post._id,
+            idPost: post._id,
             userId: currentUser._id,
             isActive: like,
           });
@@ -79,7 +79,7 @@ export default function LikeButton({ post }) {
   }, [click]);
 
   async function getLikeOfThisUser() {
-    const res = await axios.get(`/likes/${post._id}/${currentUser._id}`);
+    const res = await axios.get(`/likes/count/${currentUser._id}`);
     setLike(res.data[0]?.isActive);
   }
 

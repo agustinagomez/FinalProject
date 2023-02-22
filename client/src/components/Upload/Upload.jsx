@@ -1,28 +1,28 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
-import useMediaQuery from "@mui/material/useMediaQuery";
+import { useDispatch, useSelector } from "react-redux";
 import { useTheme } from "@mui/material/styles";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import {
   MenuItem,
   Select,
+  Button,
   OutlinedInput,
   TextField,
   Dialog,
   DialogActions,
+  useMediaQuery,
   DialogContent /* , DialogTitle */,
 } from "@mui/material";
-import s from "./Upload.module.css";
-import { storage } from "../../firebase.js";
-import { getDownloadURL, ref, uploadBytes } from "@firebase/storage";
-import { useDispatch, useSelector } from "react-redux";
-import { createdPost } from "../../redux/features/post/postGetSlice";
-import Loading from "../loading/Loading";
-import { useAuth } from "../../context";
+import { createPost } from "../../redux/features/post/postGetSlice";
 import { getUserByFirebaseId } from "../../redux/features/users/usersGetSlice";
 import { getGenre } from "../../redux/features/genres/genreGetSlice";
 import AudioPlayer from "react-h5-audio-player";
-import "react-h5-audio-player/lib/styles.css";
+import { storage } from "../../firebase.js";
+import { useAuth } from "../../context";
+import Loading from "../loading/Loading";
+import s from "./Upload.module.css";
 import defaultImg from "../Player/default.png";
+import "react-h5-audio-player/lib/styles.css";
 
 export default function Upload() {
   const currentUser = useSelector((state) => state.users.currentUser);
@@ -46,9 +46,9 @@ export default function Upload() {
   React.useEffect(() => {
     dispatch(getGenre());
     userFirebase?.uid && dispatch(getUserByFirebaseId(userFirebase?.uid));
-  }, [userFirebase]);
+  }, [userFirebase, dispatch]);
 
-  const uploadFile = (file) => {
+  const uploadFile = async (file) => {
     setLoading({ ...loading, cover: true });
     const fileRef = ref(storage, `cover/${file.name + Math.random()}`);
     return uploadBytes(fileRef, file)
@@ -62,7 +62,7 @@ export default function Upload() {
       .catch((err) => console.log(err));
   };
 
-  const uploadMusic = (file) => {
+  const uploadMusic = async (file) => {
     setLoading({ ...loading, content: true });
     const fileRef = ref(storage, `content/${file.name + Math.random()}`);
     return uploadBytes(fileRef, file)
@@ -113,7 +113,7 @@ export default function Upload() {
       !loading.content &&
       !loading.cover
     ) {
-      await dispatch(createdPost({ ...postData, idUser: currentUser._id }));
+      await dispatch(createPost({ ...postData, idUser: currentUser._id }));
       setPostData({
         title: "",
         description: "",
@@ -271,7 +271,6 @@ export default function Upload() {
                   />
                 </label>
                 <div className={s.songInfo}>
-                  {console.log(postData.content)}
                   <h3>{postData?.title ? postData.title : "Song title"}</h3>
                   {loading.content ? (
                     <div className={s.songLoading}>

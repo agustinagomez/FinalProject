@@ -33,7 +33,7 @@ const Login = () => {
     username: "",
     password: "",
     email: "",
-    idgoogle: "",
+    idGoogle: "",
     avatar: "",
   });
   const [user, setUser] = useState({ password: "", email: "" });
@@ -58,7 +58,7 @@ const Login = () => {
       users.length > 0
     ) {
       axios
-        .post("/create/users", {
+        .post("/user", {
           ...googleUser,
         })
         .then(function (response) {
@@ -108,7 +108,7 @@ const Login = () => {
         username: res.user.email.split("@")[0],
         password: res.user.email,
         email: res.user.email,
-        idgoogle: res.user.uid,
+        idGoogle: res.user.uid,
         avatar: res.user.photoURL,
       };
       userExistGoogle(newUser);
@@ -117,7 +117,7 @@ const Login = () => {
       console.log(err);
       return;
     }
-    navigate("/home");
+    return navigate("/home");
   };
 
   const handleSendPasswordReset = async (email) => {
@@ -282,12 +282,12 @@ const Login = () => {
             </form>
             <h5>
               By registering and logging in, you accept the{" "}
-              <h4
+              <button
                 style={{ color: "var(--second-page-color)" }}
                 onClick={() => setShowConditions(true)}
               >
                 terms and conditions
-              </h4>
+              </button>
             </h5>
             <Grid
               className={style.googleBox}

@@ -28,8 +28,8 @@ export const getPost = () => {
   };
 };
 
-//crear users
-export const createdPost = (body) => {
+//crear post
+export const createPost = (body) => {
   return async (dispatch) => {
     const { data } = await axios.post("/posts", body);
     dispatch(addPosts(data));
@@ -38,10 +38,10 @@ export const createdPost = (body) => {
 };
 
 //actualizar user
-export const updatePost = (id, body) => {
+export const updatePost = (_id, body) => {
   return async (dispatch) => {
     try {
-      const response = await axios.put(`/posts/${id}`, body);
+      const response = await axios.put(`/posts/${_id}`, body);
       if (response) {
         dispatch(updatePosts());
         dispatch(getPost());
@@ -53,10 +53,10 @@ export const updatePost = (id, body) => {
 };
 
 //eliminar user
-export const deletePost = (id) => {
+export const deletePost = (_id) => {
   return async (dispatch) => {
     try {
-      await axios.delete(`/posts/${id}`);
+      await axios.delete(`/posts/${_id}`);
       dispatch(deletePosts());
       dispatch(getPost());
     } catch (error) {
@@ -125,10 +125,10 @@ export const getPostByRelevance = (order) => {
   };
 };
 
-export const getPostById = (id) => {
+export const getPostById = (_id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/posts/${id}`);
+      const { data } = await axios.get(`/posts/${_id}`);
       dispatch(getCurrentPostById(data));
     } catch (error) {
       console.log(error);

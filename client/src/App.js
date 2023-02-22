@@ -1,6 +1,5 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import "dotenv/config";
 import { AuthProvider } from "./context";
 import Login from "./components/login/Login";
 import Register from "./components/register/Register";
@@ -14,7 +13,6 @@ import ProfilePage from "./components/ProfilePage/ProfilePage";
 import AdminUsers from "./components/admin/usersPerfil/AdminUsers";
 import PostContainer from "./components/postContainer/PostContainer";
 import Notification from "./components/notification/Notification";
-import Pleasures from "./components/userGenresPleasures/Pleasures";
 import Admin from "./components/admin/adminHome/Admin";
 import AdminPosts from "./components/admin/posts/AdminPosts";
 import Banned from "./components/banned/Banned";

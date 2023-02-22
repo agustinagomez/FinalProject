@@ -1,13 +1,13 @@
-import { Grid } from "@mui/material";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useAuth } from "../../context";
-import { getUserByFirebaseId } from "../../redux/features/users/usersGetSlice";
-import SideBar from "../SideBar/SideBar";
-import style from "./likedSongs.module.css";
-import CardSong from "./CardSong";
+import { Box, Grid } from "@mui/material";
 import { getSongsLikesByUserId } from "../../redux/features/like/likeGetSlice";
+import { getUserByFirebaseId } from "../../redux/features/users/usersGetSlice";
 import PlayAllButton from "../PlayAllButton/PlayAllButton";
+import style from "./likedSongs.module.css";
+import SideBar from "../SideBar/SideBar";
+import { useAuth } from "../../context";
+import CardSong from "./CardSong";
 
 export default function LikedSongs() {
   const dispatch = useDispatch();
@@ -19,13 +19,13 @@ export default function LikedSongs() {
 
   useEffect(() => {
     dispatch(getUserByFirebaseId(userFirebase.uid));
-  }, []);
+  }, [dispatch, userFirebase.uid]);
 
   useEffect(() => {
     if (Object.keys(userDB).length > 0) {
       dispatch(getSongsLikesByUserId(userDB._id));
     }
-  }, [userDB]);
+  }, [userDB, dispatch]);
 
   return (
     <Grid container className={style.likedVideos} xs={12}>
@@ -34,9 +34,9 @@ export default function LikedSongs() {
       </Grid>
       <Grid item container xs={9.5} p={`2%`}>
         {likesCurrentUser.length > 0 ? (
-          <div style={{ width: "100%" }}>
+          <Box style={{ width: "100%" }}>
             <PlayAllButton songs={likesCurrentUser} />
-            <div style={{ marginTop: "30px" }}>
+            <Box style={{ marginTop: "30px" }}>
               {likesCurrentUser?.map((post, index) => (
                 <CardSong
                   arrayMap={likesCurrentUser}
@@ -44,8 +44,8 @@ export default function LikedSongs() {
                   index={index}
                 />
               ))}
-            </div>
-          </div>
+            </Box>
+          </Box>
         ) : (
           <p style={{ margin: "0 auto", color: "white" }}>No liked songs yet</p>
         )}

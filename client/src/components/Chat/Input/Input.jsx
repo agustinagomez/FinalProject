@@ -5,12 +5,12 @@ import {
   serverTimestamp,
   Timestamp,
   updateDoc,
-} from "@firebase/firestore";
+} from "firebase/firestore";
 import { v4 as uuid } from "uuid";
 import { useSelector } from "react-redux";
 import s from "./Input.module.css";
 import Loading from "../../loading/Loading";
-import { getDownloadURL, ref, uploadBytes } from "@firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { db, storage } from "../../../firebase";
 
 const Input = () => {
@@ -55,7 +55,7 @@ const Input = () => {
         messages: arrayUnion({
           id: uuid(),
           text: content,
-          senderId: currentUser.idgoogle,
+          senderId: currentUser.idGoogle,
           date: Timestamp.now(),
           img: image,
         }),
@@ -66,14 +66,14 @@ const Input = () => {
           messages: arrayUnion({
             id: uuid(),
             text: content,
-            senderId: currentUser.idgoogle,
+            senderId: currentUser.idGoogle,
             date: Timestamp.now(),
           }),
         }));
     }
 
     content &&
-      (await updateDoc(doc(db, "userConversations", currentUser.idgoogle), {
+      (await updateDoc(doc(db, "userConversations", currentUser.idGoogle), {
         [chatId + ".lastMessage"]: {
           text: content,
         },
@@ -81,7 +81,7 @@ const Input = () => {
       }));
 
     content &&
-      (await updateDoc(doc(db, "userConversations", destination.idgoogle), {
+      (await updateDoc(doc(db, "userConversations", destination.idGoogle), {
         [chatId + ".lastMessage"]: {
           text: content,
         },

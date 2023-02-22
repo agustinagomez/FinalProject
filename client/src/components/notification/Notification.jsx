@@ -36,7 +36,7 @@ const Notification = () => {
 
   useEffect(() => {
     dispatch(getUserByFirebaseId(userFirebase.uid));
-    dispatch(getUserNotification());
+    dispatch(getUserNotification(userFirebase.uid));
   }, []);
 
   const handleWatched = () => {

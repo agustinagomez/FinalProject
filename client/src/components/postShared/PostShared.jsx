@@ -1,3 +1,6 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 import {
   Avatar,
   Button,
@@ -12,13 +15,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { deletePost } from "../../redux/features/post/postGetSlice";
-import style from "../post/post.module.css";
 import style2 from "./postShared.module.css";
+import style from "../post/post.module.css";
 import Post from "../post/Post";
 
 const Transition = React.forwardRef(function Transition(props, ref) {

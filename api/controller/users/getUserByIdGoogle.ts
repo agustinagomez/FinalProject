@@ -4,9 +4,10 @@ import Users from "../../models/Users"
 const getUserByidGoogle = async (req: Request, res: Response) => {
     const { idGoogle } = req.params
     try {
-        const users = await Users.findOne({ idGoogle })
 
-        return res.send(users)
+        const user = await Users.findOne({ idGoogle })
+
+        return res.send(user)
     } catch (err) {
         return console.log(err)
     }

@@ -1,32 +1,38 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import s from "./SideBar.module.css";
+import {
+  Badge,
+  MenuItem,
+  Rating,
+  TextField,
+  Typography,
+  SvgIcon,
+  Dialog,
+  Button,
+  Menu,
+  Modal,
+  Box,
+} from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
+import { doc, getDocFromServer, setDoc } from "firebase/firestore";
+import { useDispatch, useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
+import MailIcon from "@mui/icons-material/Mail";
+import axios from "axios";
+import s from "./SideBar.module.css";
 import logo from "../../images/logoicon.png";
 import Upload from "../Upload/Upload";
 import ButtonSupport from "../buttonSupport/ButtonSupport";
 import { useAuth } from "../../context";
 import { db } from "../../firebase";
-import { doc, getDocFromServer, setDoc } from "@firebase/firestore";
 import PayButton from "../pay/PayButton";
 import { KeyIcon } from "../componentsIcons";
-import { useDispatch, useSelector } from "react-redux";
-import { Badge, MenuItem, Rating, TextField, Typography } from "@mui/material";
-import Dialog from "@mui/material/Dialog";
-import axios from "axios";
-import MailIcon from "@mui/icons-material/Mail";
 import {
   getUserDownToRegular,
   getUserNotification,
 } from "../../redux/features/users/usersGetSlice";
-import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import EditProfile from "../ProfilePage/EditProfile";
-import { SvgIcon } from "@mui/material";
 
 const SideBar = ({ userDB }) => {
   const user = useSelector((state) => state.users.currentUser);
@@ -34,7 +40,7 @@ const SideBar = ({ userDB }) => {
   const navigate = useNavigate();
   const { logout, userFirebase } = useAuth();
   const dispatch = useDispatch();
-  const post = useSelector((state) => state.posts.postList);
+  const allPosts = useSelector((state) => state.posts.postList);
 
   useEffect(async () => {
     const docRef = doc(db, "userConversations", userFirebase?.uid);
@@ -42,11 +48,11 @@ const SideBar = ({ userDB }) => {
     userFirebase?.uid &&
       !docSnap.exists() &&
       (await setDoc(doc(db, "userConversations", userFirebase.uid), {}));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getUserNotification(user.idgoogle));
-  }, [post]);
+    dispatch(getUserNotification(user.idGoogle));
+  }, [allPosts]);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const openBoolean = Boolean(anchorEl);
@@ -55,11 +61,13 @@ const SideBar = ({ userDB }) => {
   const [showButton, setShowButton] = useState(true);
   const [showText, setShowText] = useState(false);
   const [open, setOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
+  const [openSettings, setOpenSettings] = useState(false);
   const [input, setInput] = useState({
     userId: userFirebase?.auth?.currentUser?.uid,
     name: userFirebase?.auth?.currentUser?.displayName,
     avatar: userFirebase?.auth?.currentUser?.photoURL,
-    rating: "",
+    rating: 0,
     description: "",
   });
 
@@ -88,8 +96,7 @@ const SideBar = ({ userDB }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(input);
-    if (input.rating === "")
+    if (input.rating === 0)
       return alert("Please choose a rating for the review");
     await axios.post("/reviews", input);
     setShowForm(false);
@@ -128,9 +135,6 @@ const SideBar = ({ userDB }) => {
     p: 4,
   };
 
-  const [openMenu, setOpenMenu] = useState(false);
-  const [openSettings, setOpenSettings] = useState(false);
-
   const handleOpenMenu = () => {
     setOpenMenu(true);
   };
@@ -139,19 +143,15 @@ const SideBar = ({ userDB }) => {
     setOpenMenu(false);
   };
 
-  const handleOpenSettings = () => {
-    setOpenSettings(true);
-  };
-
-  const handleCloseSettings = () => {
-    setOpenSettings(false);
+  const handleShowSettings = () => {
+    setOpenSettings(!openSettings);
   };
 
   return (
-    <div className={s.sidebar}>
+    <Box className={s.sidebar}>
       <ul className={s.routescontainer}>
         <img width="70px" alt="logo" src={logo} />
-        <div className={s.profileItem}>
+        <Box className={s.profileItem}>
           <Link to={`/home/explore/${user._id}`}>
             <img
               className={s.profilePic}
@@ -174,19 +174,15 @@ const SideBar = ({ userDB }) => {
               vertical: "top",
             }}
           >
-            <MenuItem onClick={handleOpenSettings}>Edit profile</MenuItem>
+            <MenuItem onClick={handleShowSettings}>Edit profile</MenuItem>
           </Menu>
-          <Modal
-            open={openSettings}
-            onClose={handleCloseSettings}
-            sx={{ backdropFilter: "blur(3px)" }}
-          >
+          {openSettings && (
             <EditProfile
-              close={handleCloseSettings}
+              close={handleShowSettings}
               setOpenSettings={setOpenSettings}
             />
-          </Modal>
-        </div>
+          )}
+        </Box>
         <li className={s.routeItem}>
           {" "}
           <Link to="/home">Home</Link>{" "}
@@ -216,7 +212,7 @@ const SideBar = ({ userDB }) => {
             <PayButton />
           </li>
         ) : (
-          <div>
+          <Box>
             <Button
               onMouseEnter={mouseEnter}
               id="demo-positioned-button"
@@ -272,7 +268,7 @@ const SideBar = ({ userDB }) => {
                 </Box>
               </Modal>
             </Menu>
-          </div>
+          </Box>
         )}
       </ul>
       <ul className={s.optionsContainer}>
@@ -359,7 +355,7 @@ const SideBar = ({ userDB }) => {
         <li className={s.optionItem}>
           {" "}
           {showButton && (
-            <div className={s.btn}>
+            <Box className={s.btn}>
               <button onClick={handleButton}>
                 <SvgIcon
                   xmlns="http://www.w3.org/2000/svg"
@@ -369,7 +365,7 @@ const SideBar = ({ userDB }) => {
                 </SvgIcon>
                 Share you review
               </button>
-            </div>
+            </Box>
           )}
           {showText && (
             <p className={s.textReview}>Thank you for your review!</p>
@@ -406,7 +402,7 @@ const SideBar = ({ userDB }) => {
       </ul>
       {
         <Dialog onClose={handleClose} open={open}>
-          <div className={s.form}>
+          <Box className={s.form}>
             <form onSubmit={(e) => handleSubmit(e)}>
               <p className={s.ratingText}>Choose the rating:</p>
               <Rating
@@ -429,14 +425,14 @@ const SideBar = ({ userDB }) => {
                 onChange={(e) => handleChange(e)}
                 value={input.description}
               />
-              <div>
+              <Box>
                 <button className={s.btn}>Submit</button>
-              </div>
+              </Box>
             </form>
-          </div>
+          </Box>
         </Dialog>
       }
-    </div>
+    </Box>
   );
 };
 

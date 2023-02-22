@@ -15,6 +15,7 @@ import {
   Typography,
   Snackbar,
   Alert,
+  Box,
 } from "@mui/material";
 import style from "./post.module.css";
 import styleTooltip from "../tooltip/tooltip.module.css";
@@ -41,10 +42,7 @@ import {
   TwitterIcon,
   WhatsappIcon,
 } from "react-share";
-import {
-  createdPost,
-  deletePost,
-} from "../../redux/features/post/postGetSlice";
+import { createPost, deletePost } from "../../redux/features/post/postGetSlice";
 import share from "../../images/logoiconbg.png";
 import Video from "../Video/Video";
 import LikeButton from "./LikeButton";
@@ -435,7 +433,7 @@ export default function Post({ post, comments, margin, border, height }) {
                         onClick={() => {
                           handleCloseShareInMyProfile();
                           dispatch(
-                            createdPost({
+                            createPost({
                               title: descriptionShare,
                               content: post.content,
                               type: post.type,
@@ -548,11 +546,11 @@ export default function Post({ post, comments, margin, border, height }) {
         >
           <h2>Report this post</h2>
           {errors.motiveReport ? (
-            <div className={styleTooltip.tooltip}>
+            <Box className={styleTooltip.tooltip}>
               <span className={styleTooltip.tooltiptext}>
                 {errors.motiveReport}
               </span>
-            </div>
+            </Box>
           ) : (
             ""
           )}
@@ -579,11 +577,11 @@ export default function Post({ post, comments, margin, border, height }) {
             required
           />
           {errors.detailsReport ? (
-            <div className={styleTooltip.tooltip}>
+            <Box className={styleTooltip.tooltip}>
               <span className={styleTooltip.tooltiptextBottom}>
                 {errors.detailsReport}
               </span>
-            </div>
+            </Box>
           ) : (
             ""
           )}

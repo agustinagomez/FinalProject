@@ -56,5 +56,9 @@ const user = new Schema({
   expirationDate: {
     type: Date,
   },
+  likedPosts: {
+    type: Array,
+
+  }
 })
 export default model("User", user)

@@ -1,4 +1,4 @@
-import { doc, onSnapshot } from "@firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../../../context";
@@ -19,7 +19,7 @@ const Conversations = () => {
   useEffect(() => {
     const getConversations = () => {
       const unsub = onSnapshot(
-        doc(db, "userConversations", currentUser.idgoogle),
+        doc(db, "userConversations", currentUser.idGoogle),
         (doc) => {
           setConversations(
             Object.entries(doc?.data()).sort((a, b) => b[1].date - a[1].date)
@@ -31,20 +31,20 @@ const Conversations = () => {
       };
     };
     currentUser.name && getConversations();
-  }, [currentUser?.idgoogle]);
+  }, [currentUser?.idGoogle]);
 
   const handleSelect = (u) => {
     dispatch(
       changeUserChat({
         destination: {
           name: u.displayName,
-          idgoogle: u.uid,
+          idGoogle: u.uid,
           avatar: u.photoURL,
         },
         chatId:
-          currentUser.idgoogle > u.uid
-            ? currentUser.idgoogle + u.uid
-            : u.uid + currentUser.idgoogle,
+          currentUser.idGoogle > u.uid
+            ? currentUser.idGoogle + u.uid
+            : u.uid + currentUser.idGoogle,
       })
     );
   };

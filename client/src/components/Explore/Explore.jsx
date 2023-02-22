@@ -50,7 +50,7 @@ const Explore = () => {
   const genres = useSelector((state) => state.genres.genreList);
   // const postsFilteredAndOrdered = useSelector((state) => state.posts.postsOrdered );
 
-  const allPostsSelector = useSelector((state) => state.posts.possListAll);
+  const allPostsSelector = useSelector((state) => state.posts.postListAll);
   const postsFilteredSelector = useSelector(
     (state) => state.posts.postsFiltered
   );
@@ -87,8 +87,8 @@ const Explore = () => {
     dispatch(getUser());
     dispatch(getGenre());
     dispatch(getUserById(posts?.userId));
-    dispatch(getUserByFirebaseId(userFirebase.uid));
-    dispatch(getUserNotification(userDB._id));
+    dispatch(getUserByFirebaseId(userFirebase?.uid));
+    dispatch(getUserNotification(userDB?.idGoogle));
   }, [dispatch]);
 
   useEffect(() => {

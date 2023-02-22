@@ -13,7 +13,7 @@ import {
   serverTimestamp,
   setDoc,
   updateDoc,
-} from "@firebase/firestore";
+} from "firebase/firestore";
 import { db } from "../../firebase";
 import { useAuth } from "../../context";
 import Conversations from "./Conversations/Conversations";
@@ -61,9 +61,9 @@ function Chat() {
 
   const handleOnSelect = async (user) => {
     const combinedId =
-      currentUser.idgoogle > user.idgoogle
-        ? currentUser.idgoogle + user.idgoogle
-        : user.idgoogle + currentUser.idgoogle;
+      currentUser.idGoogle > user.idGoogle
+        ? currentUser.idGoogle + user.idGoogle
+        : user.idGoogle + currentUser.idGoogle;
     dispatch(changeUserChat({ destination: user, chatId: combinedId }));
     try {
       const res = await getDoc(doc(db, "chats", combinedId));
@@ -73,18 +73,18 @@ function Chat() {
         await setDoc(doc(db, "chats", combinedId), { messages: [] });
 
         //create user chats
-        await updateDoc(doc(db, "userConversations", currentUser.idgoogle), {
+        await updateDoc(doc(db, "userConversations", currentUser.idGoogle), {
           [combinedId + ".userInfo"]: {
-            uid: user.idgoogle,
+            uid: user.idGoogle,
             displayName: user.name,
             photoURL: user.avatar,
           },
           [combinedId + ".date"]: serverTimestamp(),
         });
 
-        await updateDoc(doc(db, "userConversations", user.idgoogle), {
+        await updateDoc(doc(db, "userConversations", user.idGoogle), {
           [combinedId + ".userInfo"]: {
-            uid: currentUser.idgoogle,
+            uid: currentUser.idGoogle,
             displayName: currentUser.name,
             photoURL: currentUser.avatar,
           },

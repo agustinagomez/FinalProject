@@ -1,16 +1,19 @@
 import { Request, Response } from "express"
 import Likes from "../../models/Likes";
-import Users from "../../models/Users";
+import Posts from "../../models/Posts";
 
 const createLike = async (req: Request, res: Response) => {
     const { idPost, idUser } = req.body;
 
     try {
-        const newLike = await Likes.create({});
 
-        const user = await Users.findById({ _id: idUser });
+        const post = await Posts.findOne({ _id: idPost })
+        const newLike = await Likes.create({
+            post,
+            idUser,
+            isActive: true
+        });
 
-        //const post = await Posts.findByPk(idPost);
 
         return res.json(newLike);
 

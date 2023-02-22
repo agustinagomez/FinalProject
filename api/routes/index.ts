@@ -11,7 +11,7 @@ import removeFollower from "../controller/follows/removeFollower";
 import getGenres from "../controller/genres/getGenres";
 import changeStatusLike from "../controller/likes/changeStatusLike";
 import createLike from "../controller/likes/createLike";
-import getLikesByPostandUserId from "../controller/likes/getLikesByPostandUserId";
+import getLikesWithPosts from "../controller/likes/getLikesWithPosts";
 import getLikesByPostId from "../controller/likes/getLikesByPostId";
 import getLikesByUserId from "../controller/likes/getLikesByUserId";
 import createNoti from "../controller/notifications/createNoti";
@@ -48,9 +48,9 @@ const router = Router();
 
 //GET
 
-router.get("/users", getUsers); //user
-router.get("/users/:_id", getUserById); //user
-router.get("/users/idGoogle/:idGoogle", getUserByidGoogle); //user
+router.get("/users", getUsers);
+router.get("/users/:_id", getUserById);
+router.get("/users/idGoogle/:idGoogle", getUserByidGoogle);
 router.get("/users/data/graphs", getCountUserGraphs)
 
 router.get("/posts", getPosts);
@@ -61,11 +61,11 @@ router.get("/posts/genres/with-all", getByGenreWithAll);
 
 router.get("/genres", getGenres);
 
-router.get("/notifications/:_id", getNotiByUser);
+router.get("/notifications/:idGoogle", getNotiByUser);
 
-router.get("/likes/users/:userId", getLikesByUserId);
-router.get("/likes/posts/:postId", getLikesByPostId);
-router.get("/likes/:postId/:userId", getLikesByPostandUserId);
+router.get("/likes/users/:idUser", getLikesByUserId);
+router.get("/likes/posts/:idPost", getLikesByPostId);
+router.get("/likes/count/:idUser", getLikesWithPosts);
 
 router.get("/comments/:idPost", getByPostId);
 
@@ -75,12 +75,12 @@ router.get("/reports", getReports); //Only for admin!
 
 //POST
 
+router.post("/posts", createPost);
 router.post("/posts/order", getByTime);
 router.post("/posts/genres", getByGenre);
 router.post("/posts/order/popular", getPopular);
-router.post("/posts", createPost);
 
-router.post("/users", createUser);
+router.post("/user", createUser);
 router.post("/users/follow", addFollower);
 router.post("/users/unfollow", removeFollower);
 
@@ -88,7 +88,6 @@ router.post("/likes", createLike);
 
 router.post("/comments", createComment);
 
-router.post("/notifications/create", createNoti);
 router.post("/notifications/create", createNoti);
 
 router.post("/reviews", createReview);
@@ -116,7 +115,7 @@ router.put("/users/set/update-ban", updateBanUser);
 router.put("/users/set/role", updateRoleUser);
 
 router.put("/notifications/watched/:_id", setNotiWatched);
-router.put("/notifications/disabled/:id", setNotiDisabled);
+router.put("/notifications/disabled/:_id", setNotiDisabled);
 
 router.put("/posts/:_id", updatePost);
 

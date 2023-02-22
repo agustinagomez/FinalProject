@@ -1,16 +1,17 @@
 import { Request, Response } from "express";
-import Users from "../../models/Users";
+import { UserToCreate } from "../../types";
 import { Mail } from "../../utils/Mailer";
+import Users from "../../models/Users";
 import { bcryptFunction } from "../../utils/userCreate";
 
-const createUser = async (req: Request, res: Response) => {
-    const { name, role, plan, email, password, username, avatar, banner, idgoogle } =
+const createUser = async (req: UserToCreate, res: Response) => {
+    const { name, role, plan, email, password, username, avatar, banner, idGoogle } =
         req.body;
     try {
-        if (!name || !email || !password || !username || !idgoogle) return res.send("Empty Body")
-        const userWitEmail = await Users.exists({ email })
+        if (!name || !email || !password || !username || !idGoogle) return res.send("Empty Body");
+        const userWitEmail = await Users.exists({ email });
 
-        if (userWitEmail !== null) return res.send("User already saved")
+        if (userWitEmail !== null) return res.send("User already saved");
         const pass = bcryptFunction(password)
         const user = await Users.create({
             name,
@@ -21,12 +22,12 @@ const createUser = async (req: Request, res: Response) => {
             username,
             avatar,
             banner,
-            idgoogle
+            idGoogle
         });
 
 
 
-        Mail(email).catch(console.error);
+        //Mail(email).catch(console.error);
 
         return res.send(user);
 
